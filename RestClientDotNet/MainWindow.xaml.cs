@@ -61,12 +61,19 @@ namespace RestClientDotNet
                 contentStream.Close();
             }
 
-            // Execute the request.
-            WebResponse response = request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(responseStream);
-            String responseContent = reader.ReadToEnd();
-            this.ResultTextBox.Text = responseContent;
+            try
+            {
+                // Execute the request.
+                WebResponse response = request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+                String responseContent = reader.ReadToEnd();
+                this.ResultTextBox.Text = responseContent;
+            }
+            catch (Exception exp)
+            {
+                this.ResultTextBox.Text = exp.Message + exp.StackTrace;
+            }
         }
     }
 }
